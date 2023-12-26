@@ -25,9 +25,9 @@ class LoginScreenState extends State<LoginScreen> {
 
     //APIs.ConnectSql().then((value) => Dialogs.showSnackBar(context, 'Connection Successful'));
 
-    APIs.ConnectSql().then((value) => {
-      Dialogs.showSnackBar(context, 'Connection Successful')
-    });
+    // APIs.ConnectSql().then((value) => {
+    //   Dialogs.showSnackBar(context, 'Connection Successful')
+    // });
   }
 
   _handleGoogleBtnClick() {

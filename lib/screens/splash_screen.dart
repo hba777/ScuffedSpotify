@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:scuffed_spotify/api/apis.dart';
 import 'package:scuffed_spotify/screens/auth/login_screen.dart';
 import 'home_screen.dart';
 
@@ -19,7 +20,7 @@ class SplashScreenState extends State<SplashScreen> {
     super.initState();
 
     //Navigate to HomeScreen
-    Future.delayed(const Duration(seconds:2),(){
+    Future.delayed(const Duration(seconds:2),() {
 
       //Newer Android Issues Fix fullscreen and Nav Bar Color
       //Exit FullScreen
@@ -32,6 +33,8 @@ class SplashScreenState extends State<SplashScreen> {
       Navigator.pushReplacement(context,
       MaterialPageRoute(builder: (_) => LoginScreen()));
     });
+
+    APIs.main();
   }
 
   @override
