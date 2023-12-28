@@ -13,7 +13,23 @@ class LoginScreen extends StatefulWidget {
 
 class LoginScreenState extends State<LoginScreen> {
   bool _isAnimate = false;
+  String? mail ='';
+  var db = new APIs();
 
+  // void _getData(){
+  //   db.ConnectSql().then((conn) {
+  //     String sql = 'select name from lab.users where id = 1;';
+  //     conn.query(sql).then((results) {
+  //       for (var row in results){
+  //         setState(() {
+  //           print('dOOdo');
+  //           log('RowData: $row');
+  //           mail = row[0];
+  //         });
+  //       }
+  //     });
+  //   });
+  // }
   @override
   void initState() {
     super.initState();
@@ -23,11 +39,9 @@ class LoginScreenState extends State<LoginScreen> {
       });
     });
 
-    //APIs.ConnectSql().then((value) => Dialogs.showSnackBar(context, 'Connection Successful'));
 
-    // APIs.ConnectSql().then((value) => {
-    //   Dialogs.showSnackBar(context, 'Connection Successful')
-    // });
+
+
   }
 
   _handleGoogleBtnClick() {
@@ -80,12 +94,12 @@ class LoginScreenState extends State<LoginScreen> {
                       shape: const StadiumBorder(),
                       elevation: 1),
                   onPressed: () {
-                    _handleGoogleBtnClick();
+
                   },
                   icon:
                   Image.asset('images/spotify.png', height: mq.height * .03),
                   label: RichText(
-                      text: const TextSpan(
+                      text: TextSpan(
                           style: TextStyle(color: Colors.white, fontSize: 16,
                               wordSpacing: 1),
                           children: [
@@ -108,16 +122,15 @@ class LoginScreenState extends State<LoginScreen> {
                       shape: const StadiumBorder(),
                       elevation: 1),
                   onPressed: () {
-                    _handleGoogleBtnClick();
                   },
                   icon:
                   Image.asset('images/spotify.png', height: mq.height * .03),
                   label: RichText(
-                      text: const TextSpan(
+                      text: TextSpan(
                           style: TextStyle(color: Colors.white, fontSize: 16,
                           wordSpacing: 1),
                           children: [
-                            TextSpan(text: 'User Sign In'),
+                            TextSpan(text: 'User Sign In:'),
 
                           ]
                       )

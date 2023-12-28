@@ -1,55 +1,42 @@
-import 'dart:developer';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
-import 'package:mysql1/mysql1.dart';
+class APIs{
+  static String nodeServerUrl = '925d-38-7-184-186.ngrok-free.app';
 
-class APIs {
+  static Future<List<dynamic>> fetchData() async {
+    var url = Uri.https(nodeServerUrl, '/get_data');
 
-  static final String host = '192.168.100.5';
+    // var url =
+    // Uri.https('$nodeServerUrl/get_data');
+    final response = await http.get(url);
+    if (response.statusCode == 200) {
+      // Parse the JSON data
+      List<dynamic> data = json.decode(response.body);
+      // Parse the JSON data For key level so indiviual data can be shown
+      //List<Map<String, dynamic>> data = List<Map<String, dynamic>>.from(json.decode(response.body));
 
-  static final String user = 'haris';
 
-  static final String password = 'Postpone777';
+      // Print the data to the console
+      print('Fetched data: $data');
 
-  static final int port = 1433;
-
-  // static Future<void> ConnectSql() async{
-  //   await SqlConn.connect(
-  //       ip: "192.168.167.176",
-  //       port: "1433",
-  //       databaseName: "MyDatabase",
-  //       username: "admin123",
-  //       password: "Pass@123");
-  // }
-
-  //Use Future for anything that will happen in some time
-  //Use await and async to wait for a response
-  static Future<MySqlConnection> ConnectSql() async {
-    var settings = new ConnectionSettings(
-        host: host,
-        user: user,
-        password: password,
-        port: port
-    );
-
-    return await MySqlConnection.connect(settings);
-  }
-
-  static Future main() async {
-    try {
-      final conn = await MySqlConnection.connect(ConnectionSettings(
-          host: '192.168.100.5',
-          port: 3306,
-          user: 'hba777',
-          db: 'lab',
-          password: 'Postpone777',
-          timeout: const Duration(seconds: 60)
-      ));
-
-      print("YOU FUCKING DID IT");
-
-      await conn.close();
-    } catch (e) {
-      print('Error: $e');
+      return data;
+    } else {
+      // Log an error message to the console
+      print('Failed to load data. Status code: ${response.statusCode}');
+      throw Exception('Failed to load data');
     }
   }
+
+// Future<void> updateData(int id, String newData) async {
+//   final response = await http.post(
+//     '$nodeServerUrl/update_data',
+//     headers: {'Content-Type': 'application/json'},
+//     body: jsonEncode({'id': id, 'newData': newData}),
+//   );
+//
+//   if (response.statusCode != 200) {
+//     throw Exception('Failed to update data');
+//   }
+// }
 }

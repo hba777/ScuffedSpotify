@@ -34,7 +34,8 @@ class SplashScreenState extends State<SplashScreen> {
       MaterialPageRoute(builder: (_) => LoginScreen()));
     });
 
-    APIs.main();
+    APIs.fetchData();
+
   }
 
   @override
