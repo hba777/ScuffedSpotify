@@ -2,7 +2,8 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class APIs{
-  static String nodeServerUrl = '8404-38-7-184-186.ngrok-free.app';
+  //This is server
+  static String nodeServerUrl = '817a-2401-ba80-a11c-501f-c529-d681-dfd2-2975.ngrok-free.app';
 
   static Future<List<dynamic>> fetchData() async {
     var url = Uri.https(nodeServerUrl, '/get_data');
