@@ -48,19 +48,11 @@ dependencies:
   #launcher icons
   flutter_launcher_icons: "^0.13.1"
 
-
-  #Sql Connection
-  #sql_conn: ^0.0.3
-  mysql1: ^0.20.0
+  #Play Songs
+  audioplayers: ^5.2.1
 
   #Charts
   syncfusion_flutter_charts: ^24.1.41
-
-  #Spotify Sdk
-  #spotify_sdk: ^2.3.1
-
-  flutter_dotenv: ^5.1.0
-
 
 dev_dependencies:
   flutter_test:

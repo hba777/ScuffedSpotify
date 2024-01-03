@@ -2,7 +2,8 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class APIs{
-  static Future<String?> getAccessToken() async {
+  //Function to get spotify api token
+    static Future<String?> getAccessToken() async {
     const String clientId = 'd65f6211807049fe97cf6eb23ceea7e5';
     const String clientSecret = '101aa97ef3214b279e29c5aeee414dd0';
 
@@ -37,6 +38,41 @@ class APIs{
     }
     }
 
+    //Function to get song details
+    static Future<String?> getSongDetails(String accessToken) async {
+    // Replace 'YOUR_SONG_NAME' with the name of the song you want to search for
+    final String songName = 'The Search';
+
+    // Spotify API endpoint to search for a track
+    final String apiUrl = 'https://api.spotify.com/v1/search';
+
+    // Make a GET request to search for the song
+    final http.Response response = await http.get(
+      Uri.parse('$apiUrl?q=$songName&type=track'),
+      headers: {
+        'Authorization': 'Bearer ${accessToken}',
+      },
+    );
+
+    // Parse the response
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> jsonResponse = json.decode(response.body);
+
+      // Get the first track from the search results
+      final Map<String, dynamic> track = jsonResponse['tracks']['items'][0];
+
+      // Extract the song ID and image URL
+      final String songId = track['id'];
+      final String imageUrl = track['album']['images'][0]['url'];
+
+      return imageUrl;
+    } else {
+      // Handle error, print or log the response for debugging
+      print('Error getting song details: ${response.statusCode}');
+      print(response.body);
+    }
+  }
+
   //This is server
   static String nodeServerUrl = '5d5e-205-164-132-73.ngrok-free.app';
 
@@ -49,9 +85,10 @@ class APIs{
     if (response.statusCode == 200) {
       // Parse the JSON data
       List<dynamic> data = json.decode(response.body);
-      // Parse the JSON data For key level so indiviual data can be shown
+      // Parse the JSON data For key level so individual data can be shown
       //List<Map<String, dynamic>> data = List<Map<String, dynamic>>.from(json.decode(response.body));
 
+      //Call the getSongDetails here and store returned value in object
 
       // Print the data to the console
       print('Fetched data: $data');

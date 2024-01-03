@@ -49,7 +49,7 @@ class LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     mq = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: Colors.blueGrey,
+      backgroundColor: Colors.black87,
       appBar: AppBar(
         backgroundColor: Colors.black,
         automaticallyImplyLeading: false,
@@ -77,7 +77,7 @@ class LoginScreenState extends State<LoginScreen> {
               height: mq.height * .06,
               child: ElevatedButton.icon(
                   style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green,
+                      backgroundColor: Colors.deepPurpleAccent,
                       shape: const StadiumBorder(),
                       elevation: 1),
                   onPressed: () {
@@ -105,13 +105,23 @@ class LoginScreenState extends State<LoginScreen> {
               height: mq.height * .06,
               child: ElevatedButton.icon(
                   style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green,
+                      backgroundColor: Colors.deepPurpleAccent,
                       shape: const StadiumBorder(),
                       elevation: 1),
                   onPressed: () {
+                    // Check().then((value) {
+                    //   Navigator.push(context,
+                    //   MaterialPageRoute(builder: (_) => SongScreen(accessToken: value)));
+                    // });
+                    String? accessToken;
                     Check().then((value) {
-                      Navigator.push(context,
-                      MaterialPageRoute(builder: (_) => SongScreen(accessToken: value)));
+                      print(value);
+                      accessToken = value;
+                      APIs.getSongDetails(value!).then((value) {
+                        print(accessToken);
+                        print(value);
+                        Navigator.push(context, MaterialPageRoute(builder: (_) => SongScreen(accessToken: accessToken, imageUrl: value,) ));
+                      });
                     });
                   },
                   icon:
