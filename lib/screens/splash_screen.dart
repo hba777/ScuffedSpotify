@@ -14,6 +14,16 @@ class SplashScreen extends StatefulWidget {
 }
 
 class SplashScreenState extends State<SplashScreen> {
+  // void main() async {
+  //   final String? accessToken = await APIs.getAccessToken();
+  //   if (accessToken != null) {
+  //     // Use the access token for authenticated requests
+  //     print('Access Token: $accessToken');
+  //   } else {
+  //     // Handle the case where obtaining the access token failed
+  //     print('Failed to get the access token');
+  //   }
+  // }
 
   @override
   void initState() {

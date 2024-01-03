@@ -1,7 +1,8 @@
 import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
-import '../../api/apis.dart';
+import 'package:scuffed_spotify/api/apis.dart';
+import 'package:scuffed_spotify/screens/SpotifyScreen.dart';
 import '../../helpers/dailogs.dart';
 import '../home_screen.dart';
 
@@ -14,22 +15,7 @@ class LoginScreen extends StatefulWidget {
 class LoginScreenState extends State<LoginScreen> {
   bool _isAnimate = false;
   String? mail ='';
-  var db = new APIs();
 
-  // void _getData(){
-  //   db.ConnectSql().then((conn) {
-  //     String sql = 'select name from lab.users where id = 1;';
-  //     conn.query(sql).then((results) {
-  //       for (var row in results){
-  //         setState(() {
-  //           print('dOOdo');
-  //           log('RowData: $row');
-  //           mail = row[0];
-  //         });
-  //       }
-  //     });
-  //   });
-  // }
   @override
   void initState() {
     super.initState();
@@ -38,22 +24,23 @@ class LoginScreenState extends State<LoginScreen> {
         _isAnimate = true;
       });
     });
-
-
-
-
   }
 
+  Future<String?> Check() async {
+    String? accessToken = await APIs.getAccessToken();
+    if (accessToken != null) {
+      // Use the access token for authenticated requests
+      print('Access Token: $accessToken');
+    } else {
+      // Handle the case where obtaining the access token failed
+      print('Failed to get the access token');
+    }
+    return accessToken;
+  }
   _handleGoogleBtnClick() {
     //Show Progress Bar
     Dialogs.showProgressBar(context);
 
-  //   _signInWithGoogle().then((user) async {
-  //     //Hiding Progress bar
-  //     Navigator.pop(context);
-  //
-  //     ;
-  //   });
   }
 
 
@@ -122,6 +109,10 @@ class LoginScreenState extends State<LoginScreen> {
                       shape: const StadiumBorder(),
                       elevation: 1),
                   onPressed: () {
+                    Check().then((value) {
+                      Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => SongScreen(accessToken: value)));
+                    });
                   },
                   icon:
                   Image.asset('images/spotify.png', height: mq.height * .03),
