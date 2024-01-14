@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import '../models/song_class.dart';
 
 class APIs{
   //Function to get spotify api token
@@ -39,67 +40,66 @@ class APIs{
     }
 
     //Function to get song details
-    static Future<String?> getSongDetails(String accessToken) async {
-    // Replace 'YOUR_SONG_NAME' with the name of the song you want to search for
-    final String songName = 'The Search';
+    static Future<void> getSongDetailsAndUpdateModel(String accessToken, AutoGenerate autoGenerate) async {
+      final String songName = autoGenerate.empName;
+      final String apiUrl = 'https://api.spotify.com/v1/search';
 
-    // Spotify API endpoint to search for a track
-    final String apiUrl = 'https://api.spotify.com/v1/search';
+      final http.Response response = await http.get(
+        Uri.parse('$apiUrl?q=$songName&type=track'),
+        headers: {
+          'Authorization': 'Bearer ${accessToken}',
+        },
+      );
 
-    // Make a GET request to search for the song
-    final http.Response response = await http.get(
-      Uri.parse('$apiUrl?q=$songName&type=track'),
-      headers: {
-        'Authorization': 'Bearer ${accessToken}',
-      },
-    );
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> jsonResponse = json.decode(response.body);
+        final Map<String, dynamic> track = jsonResponse['tracks']['items'][0];
+        final String imageUrl = track['album']['images'][0]['url'];
 
-    // Parse the response
-    if (response.statusCode == 200) {
-      final Map<String, dynamic> jsonResponse = json.decode(response.body);
-
-      // Get the first track from the search results
-      final Map<String, dynamic> track = jsonResponse['tracks']['items'][0];
-
-      // Extract the song ID and image URL
-      final String songId = track['id'];
-      final String imageUrl = track['album']['images'][0]['url'];
-
-      return imageUrl;
-    } else {
-      // Handle error, print or log the response for debugging
-      print('Error getting song details: ${response.statusCode}');
-      print(response.body);
+        // Update the empUrl attribute in the AutoGenerate instance
+        autoGenerate.setEmpUrl(imageUrl);
+      } else {
+        print('Error getting song details: ${response.statusCode}');
+        print(response.body);
+      }
     }
-  }
 
-  //This is server
-  static String nodeServerUrl = '5d5e-205-164-132-73.ngrok-free.app';
 
-  static Future<List<dynamic>> fetchData() async {
-    var url = Uri.https(nodeServerUrl, '/get_data');
+    //This is server
+    static String nodeServerUrl = 'https://366c-38-7-191-75.ngrok-free.app';
 
-    // var url =
-    // Uri.https('$nodeServerUrl/get_data');
-    final response = await http.get(url);
-    if (response.statusCode == 200) {
-      // Parse the JSON data
-      List<dynamic> data = json.decode(response.body);
-      // Parse the JSON data For key level so individual data can be shown
-      //List<Map<String, dynamic>> data = List<Map<String, dynamic>>.from(json.decode(response.body));
+    static Future<List<AutoGenerate>> fetchData() async {
+      var url = Uri.parse('$nodeServerUrl/get_data');
 
-      //Call the getSongDetails here and store returned value in object
+      final response = await http.get(url);
+      if (response.statusCode == 200) {
+        // Parse the JSON data
+        print('Response data: ${response.body}');
 
-      // Print the data to the console
-      print('Fetched data: $data');
+        List<dynamic> jsonData = json.decode(response.body);
 
-      return data;
-    } else {
-      // Log an error message to the console
-      print('Failed to load data. Status code: ${response.statusCode}');
-      throw Exception('Failed to load data');
+        // Map the data to your model
+        List<AutoGenerate> data = jsonData.map((item) => AutoGenerate.fromJson(item)).toList();
+
+        // Fetch song details and update empUrl for each AutoGenerate instance
+        String? accessToken = await getAccessToken();
+        for (AutoGenerate autoGenerate in data) {
+          await getSongDetailsAndUpdateModel(accessToken!, autoGenerate);
+        }
+
+        // Print the data to the console
+        print('Fetched data: $data');
+
+        return data;
+      } else {
+        // Log an error message to the console
+        print('Failed to load data. Status code: ${response.statusCode}');
+        throw Exception('Failed to load data');
+      }
     }
-  }
+
+
+
 
 // Future<void> updateData(int id, String newData) async {
 //   final response = await http.post(
