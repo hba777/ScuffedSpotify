@@ -9,7 +9,7 @@ const port = 3000;
 const connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: '',
+  password: 'root',
   database: 'test',
 });
 
@@ -19,7 +19,7 @@ app.use(bodyParser.json());
 
 // Define routes for handling database operations
 app.get('/get_data', (req, res) => {
-  connection.query('SELECT * FROM employee', (error, results, fields) => {
+  connection.query('SELECT * FROM employees', (error, results, fields) => {
     if (error) throw error;
     res.json(results);
   });

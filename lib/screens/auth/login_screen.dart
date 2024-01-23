@@ -2,9 +2,9 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:scuffed_spotify/api/apis.dart';
+import 'package:scuffed_spotify/screens/Albums_Screen.dart';
 import 'package:scuffed_spotify/screens/SpotifyScreen.dart';
 import '../../helpers/dailogs.dart';
-import '../home_screen.dart';
 import 'package:scuffed_spotify/models/song_class.dart';
 
 class LoginScreen extends StatefulWidget {

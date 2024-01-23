@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:scuffed_spotify/api/apis.dart';
 import 'package:scuffed_spotify/screens/auth/login_screen.dart';
-import 'home_screen.dart';
+
+late Size mq;
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

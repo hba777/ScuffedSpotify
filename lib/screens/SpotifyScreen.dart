@@ -1,3 +1,5 @@
+import 'package:scuffed_spotify/screens/SongData.dart';
+
 import '../models/song_class.dart';
 import '../api/apis.dart';
 
@@ -35,25 +37,37 @@ class _MyHomePageState extends State<MyHomePage> {
               return ListView.builder(
                 itemCount: data.length,
                 itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('ID: ${data[index].empID}'),
-                        Text('Name: ${data[index].empName}'),
-                        // Display the image from the empUrl if not null
-                        if (data[index].empUrl != null)
-                          Image.network(data[index].empUrl!),
-                      ],
+                  AutoGenerate tappedItem = data[index]; // Get the specific item for the tapped widget
+
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => Charts(auto: tappedItem)),
+                      );
+                    },
+                    child: ListTile(
+                      title: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('ID: ${tappedItem.empID}'),
+                          Text('Name: ${tappedItem.empName}'),
+                          // Display the image from the empUrl if not null
+                          if (tappedItem.empUrl != null)
+                            Image.network(tappedItem.empUrl!),
+                        ],
+                      ),
                     ),
                   );
                 },
               );
+
             }
           },
         ),
       ),
     );
   }
+
 
 }

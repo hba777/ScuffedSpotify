@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:scuffed_spotify/screens/home_screen.dart';
 import 'package:scuffed_spotify/screens/splash_screen.dart';
 
 void main() {
