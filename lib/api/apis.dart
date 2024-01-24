@@ -100,8 +100,8 @@ class APIs{
     }
   }
 
-  //Get AlbumData
-  static Future<List<String>> getAlbumImages(String albumId) async {
+  //Get Album Image Data
+  static Future<String?> getAlbumImages(String albumId) async {
     String? accessToken = await getAccessToken();
     log('$accessToken');
 
@@ -114,17 +114,37 @@ class APIs{
 
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
-      List<String> images = [];
-      for (var image in data["images"]) {
-        images.add(image["url"]);
-      }
-      return images;
+      String imageUrl = data["images"][0]["url"]; // Assuming you want the first image
+      return imageUrl;
     } else {
-      print("Error getting album images: ${response.statusCode}");
-      return [];
+      print("Error getting album image: ${response.statusCode}");
+      return null;
     }
   }
+  //Get PlayList Image Data
+  static Future<String?> fetchPlaylistImage(String playlistId) async {
+    String? accessToken = await getAccessToken();
 
+    try {
+      final response = await http.get(
+        Uri.parse("https://api.spotify.com/v1/playlists/$playlistId"),
+        headers: {"Authorization": "Bearer $accessToken",
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> data = json.decode(response.body);
+        final String imageUrl = data['images'][0]['url'];
+
+        return imageUrl;
+      } else {
+        print('Failed to load playlist image');
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
+    return null;
+  }
 
 // Future<void> updateData(int id, String newData) async {
 //   final response = await http.post(

@@ -3,22 +3,22 @@ import 'package:scuffed_spotify/api/apis.dart';
 
 late Size mq;
 
-class Albums extends StatefulWidget {
-  const Albums({super.key});
+class Playlists extends StatefulWidget {
+  const Playlists({super.key});
 
   @override
-  State<Albums> createState() => _AlbumsState();
+  State<Playlists> createState() => _PlaylistsState();
 }
 
-class _AlbumsState extends State<Albums> {
+class _PlaylistsState extends State<Playlists> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Spotify Album Images'),
+        title: Text('Spotify Playlist Images'),
       ),
       body: FutureBuilder(
-        future: APIs.getAlbumImages('382ObEPsp2rxGrnsizN5TX'),
+        future: APIs.fetchPlaylistImage('3cEYpjA9oz9GiPac4AsH4n'),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
