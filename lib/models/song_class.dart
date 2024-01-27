@@ -1,24 +1,4 @@
 class AutoGenerate {
-  AutoGenerate({
-    required this.trackId,
-    required this.trackName,
-    required this.trackArtist,
-    required this.trackPopularity,
-    required this.trackAlbumId,
-    required this.danceability,
-    required this.energy,
-    required this.keyValue,
-    required this.loudness,
-    required this.modeValue,
-    required this.speechiness,
-    required this.acousticness,
-    required this.instrumentalness,
-    required this.liveness,
-    required this.valence,
-    required this.tempo,
-    required this.durationMs,
-    this.url,
-  });
   late final String trackId;
   late final String trackName;
   late final String trackArtist;
@@ -38,25 +18,41 @@ class AutoGenerate {
   late final int durationMs;
   String? url;
 
-  AutoGenerate.fromJson(Map<String, dynamic> json){
+  AutoGenerate.fromJson(Map<String, dynamic> json) {
     trackId = json['track_id'];
     trackName = json['track_name'];
     trackArtist = json['track_artist'];
     trackPopularity = json['track_popularity'];
     trackAlbumId = json['track_album_id'];
-    danceability = json['danceability'];
-    energy = json['energy'];
+
+    // Parsing danceability, energy, loudness, speechiness, acousticness, instrumentalness, liveness, valence, tempo
+    danceability = parseDouble(json['danceability']);
+    energy = parseDouble(json['energy']);
     keyValue = json['key_value'];
-    loudness = json['loudness'];
+    loudness = parseDouble(json['loudness']);
     modeValue = json['mode_value'];
-    speechiness = json['speechiness'];
-    acousticness = json['acousticness'];
-    instrumentalness = json['instrumentalness'];
-    liveness = json['liveness'];
-    valence = json['valence'];
-    tempo = json['tempo'];
+    speechiness = parseDouble(json['speechiness']);
+    acousticness = parseDouble(json['acousticness']);
+    instrumentalness = parseDouble(json['instrumentalness']);
+    liveness = parseDouble(json['liveness']);
+    valence = parseDouble(json['valence']);
+    tempo = parseDouble(json['tempo']);
+
     durationMs = json['duration_ms'];
     url = json['empUrl']; // Update to include empUrl
+  }
+
+  // Utility method to safely parse double values
+  double parseDouble(dynamic value) {
+    if (value is int) {
+      return value.toDouble();
+    } else if (value is double) {
+      return value;
+    } else if (value is String) {
+      return double.tryParse(value) ?? 0.0;
+    } else {
+      return 0.0; // Default value or handle accordingly
+    }
   }
 
   Map<String, dynamic> toJson() {

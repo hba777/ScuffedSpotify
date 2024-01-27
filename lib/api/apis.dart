@@ -68,7 +68,7 @@ class APIs{
 
 
   //This is server url
-  static String nodeServerUrl = 'https://456c-38-7-191-176.ngrok-free.app';
+  static String nodeServerUrl = 'https://2f35-38-7-191-135.ngrok-free.app';
 
   //Get Sql Song Data
   static Future<List<AutoGenerate>> fetchData() async {

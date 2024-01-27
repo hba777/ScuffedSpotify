@@ -11,9 +11,9 @@ class AutoGenerateAlbums {
   String? url;
 
   AutoGenerateAlbums.fromJson(Map<String, dynamic> json){
-    trackAlbumId = json['track_album_id'];
-    trackAlbumName = json['track_album_name'];
-    trackAlbumReleaseDate = json['track_album_release_date'];
+    trackAlbumId = json['track_album_id'] as String;
+    trackAlbumName = json['track_album_name'] as String;
+    trackAlbumReleaseDate = json['track_album_release_date'] as String;
     url = json['empUrl']; // Update to include empUrl
   }
 

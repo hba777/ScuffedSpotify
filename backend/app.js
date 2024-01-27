@@ -9,7 +9,7 @@ const port = 3000;
 const connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: '',
+  password: 'Zabildec6,9',
   database: 'db_stg2',
 });
 
@@ -19,14 +19,14 @@ app.use(bodyParser.json());
 
 // Define routes for handling database operations
 app.get('/get_tracks', (req, res) => {
-  connection.query('SELECT * FROM track', (error, results, fields) => {
+  connection.query('SELECT * FROM track order by track_popularity DESC limit 10', (error, results, fields) => {
     if (error) throw error;
     res.json(results);
   });
 });
 
 app.get('/get_albums', (req, res) => {
-  connection.query('SELECT * FROM album', (error, results, fields) => {
+  connection.query('SELECT * FROM album limit 10', (error, results, fields) => {
     if (error) throw error;
     res.json(results);
   });
