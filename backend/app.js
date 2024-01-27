@@ -9,8 +9,8 @@ const port = 3000;
 const connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: 'root',
-  database: 'test',
+  password: 'Zabildec6,9',
+  database: 'db_stg2',
 });
 
 connection.connect();
@@ -18,8 +18,15 @@ connection.connect();
 app.use(bodyParser.json());
 
 // Define routes for handling database operations
-app.get('/get_data', (req, res) => {
-  connection.query('SELECT * FROM employees', (error, results, fields) => {
+app.get('/get_tracks', (req, res) => {
+  connection.query('SELECT * FROM track', (error, results, fields) => {
+    if (error) throw error;
+    res.json(results);
+  });
+});
+
+app.get('/get_albums', (req, res) => {
+  connection.query('SELECT * FROM album', (error, results, fields) => {
     if (error) throw error;
     res.json(results);
   });

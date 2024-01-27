@@ -17,7 +17,7 @@ class _ChartsState extends State<Charts> {
     return Scaffold(
       appBar: AppBar(),
       body: Center(
-        child: Text('Received object with ID: ${widget.auto.empID}'),
+        child: Text('Received object with ID: ${widget.auto.trackId}'),
       ),
     );
   }

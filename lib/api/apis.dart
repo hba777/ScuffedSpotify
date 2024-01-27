@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:http/http.dart' as http;
+import 'package:scuffed_spotify/models/album_class.dart';
 import '../models/song_class.dart';
 
 class APIs{
@@ -42,7 +43,7 @@ class APIs{
 
   //Function to get song details
   static Future<void> getSongDetailsAndUpdateModel(String accessToken, AutoGenerate autoGenerate) async {
-    final String songName = autoGenerate.empName;
+    final String songName = autoGenerate.trackName;
     final String apiUrl = 'https://api.spotify.com/v1/search';
 
     final http.Response response = await http.get(
@@ -58,7 +59,7 @@ class APIs{
       final String imageUrl = track['album']['images'][0]['url'];
 
       // Update the empUrl attribute in the AutoGenerate instance
-      autoGenerate.setEmpUrl(imageUrl);
+      autoGenerate.setUrl(imageUrl);
     } else {
       print('Error getting song details: ${response.statusCode}');
       print(response.body);
@@ -67,11 +68,11 @@ class APIs{
 
 
   //This is server url
-  static String nodeServerUrl = 'https://3f77-38-7-191-16.ngrok-free.app';
+  static String nodeServerUrl = 'https://456c-38-7-191-176.ngrok-free.app';
 
   //Get Sql Song Data
   static Future<List<AutoGenerate>> fetchData() async {
-    var url = Uri.parse('$nodeServerUrl/get_data');
+    var url = Uri.parse('$nodeServerUrl/get_tracks');
 
     final response = await http.get(url);
     if (response.statusCode == 200) {
@@ -100,27 +101,62 @@ class APIs{
     }
   }
 
-  //Get Album Image Data
-  static Future<String?> getAlbumImages(String albumId) async {
-    String? accessToken = await getAccessToken();
-    log('$accessToken');
+  //Get Sql Album Data
+  static Future<List<AutoGenerateAlbums>> fetchAlbumData() async {
+    var url = Uri.parse('$nodeServerUrl/get_albums');
 
-    final response = await http.get(
-      Uri.parse("https://api.spotify.com/v1/albums/$albumId"),
+    final response = await http.get(url);
+    if (response.statusCode == 200) {
+      // Parse the JSON data
+      print('Response data: ${response.body}');
+
+      List<dynamic> jsonData = json.decode(response.body);
+
+      // Map the data to your model
+      List<AutoGenerateAlbums> data = jsonData.map((item) => AutoGenerateAlbums.fromJson(item)).toList();
+      // Fetch song details and update empUrl for each AutoGenerate instance
+      String? accessToken = await getAccessToken();
+      for (AutoGenerateAlbums autoGenerateAlbums in data) {
+        await getAlbumDetailsAndUpdateModel(accessToken!, autoGenerateAlbums);
+      }
+
+      // Print the data to the console
+      print('Fetched data: $data');
+
+      return data;
+    } else {
+      // Log an error message to the console
+      print('Failed to load data. Status code: ${response.statusCode}');
+      throw Exception('Failed to load data');
+    }
+  }
+
+  //Get Album Image Data
+  static Future<void> getAlbumDetailsAndUpdateModel(String accessToken, AutoGenerateAlbums autoGenerateAlbums) async {
+    final String albumName = autoGenerateAlbums.trackAlbumName; // Assuming you have an 'albumName' property in your AutoGenerateAlbums class
+    final String apiUrl = 'https://api.spotify.com/v1/search';
+
+    final http.Response response = await http.get(
+      Uri.parse('$apiUrl?q=$albumName&type=album'),
       headers: {
-        "Authorization": "Bearer $accessToken",
+        'Authorization': 'Bearer $accessToken',
       },
     );
 
     if (response.statusCode == 200) {
-      final data = json.decode(response.body);
-      String imageUrl = data["images"][0]["url"]; // Assuming you want the first image
-      return imageUrl;
+      final Map<String, dynamic> jsonResponse = json.decode(response.body);
+      final Map<String, dynamic> album = jsonResponse['albums']['items'][0];
+      final String imageUrl = album['images'][0]['url'];
+
+      // Update the empUrl attribute in the AutoGenerate instance
+      autoGenerateAlbums.setUrl(imageUrl);
     } else {
-      print("Error getting album image: ${response.statusCode}");
-      return null;
+      print('Error getting album details: ${response.statusCode}');
+      print(response.body);
     }
   }
+
+
   //Get PlayList Image Data
   static Future<String?> fetchPlaylistImage(String playlistId) async {
     String? accessToken = await getAccessToken();
