@@ -61,43 +61,37 @@ class LoginScreenState extends State<LoginScreen> {
           ),
         ),
       ),
-      body: Stack(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          AnimatedPositioned(
+          AnimatedContainer(
             duration: const Duration(seconds: 1),
-            top: mq.height * .15,
-            left: _isAnimate ? mq.width * .25 : -mq.width * .5,
-            width: mq.width * .5,
+            alignment: Alignment.center,
             child: Image.asset('images/spotify.png'),
           ),
-
-          Positioned(
-            bottom: mq.height * .15,
-            left: mq.width * .15,
-            width: mq.width * .7,
-            height: mq.height * .06,
-            child: ElevatedButton.icon(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.purpleAccent[100],
-                shape: const StadiumBorder(),
-                elevation: 1,
-              ),
-              onPressed: () {
-                // Your logic for user login here
-                // For example, navigate to MyHomePage
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => MyHomePage()),
-                );
-              },
-              icon: Image.asset('images/spotify.png', height: mq.height * .03),
-              label: RichText(
-                text: TextSpan(
-                  style: TextStyle(color: Colors.white, fontSize: 16, wordSpacing: 1),
-                  children: [
-                    TextSpan(text: 'Get Started'),
-                  ],
-                ),
+          SizedBox(height: 40),  // Increase the height for more spacing
+          ElevatedButton.icon(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.purpleAccent[100],
+              shape: const StadiumBorder(),
+              elevation: 1,
+              padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),  // Adjust padding for a larger button
+            ),
+            onPressed: () {
+              // Your logic for user login here
+              // For example, navigate to MyHomePage
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => MyHomePage()),
+              );
+            },
+            icon: Image.asset('images/spotify.png', height: mq.height * .03),
+            label: RichText(
+              text: TextSpan(
+                style: TextStyle(color: Colors.white, fontSize: 32, wordSpacing: 1),  // Adjust the fontSize as needed
+                children: [
+                  TextSpan(text: 'Get Started'),
+                ],
               ),
             ),
           ),
