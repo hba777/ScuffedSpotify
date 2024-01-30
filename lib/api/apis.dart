@@ -9,7 +9,7 @@ import '../screens/YearlyChart.dart';
 
 class APIs{
   //This is server url
-  static String nodeServerUrl = 'https://a38c-205-164-132-135.ngrok-free.app';
+  static String nodeServerUrl = 'https://9fb3-205-164-132-135.ngrok-free.app';
 
   //Function to get spotify api token
   static Future<String?> getAccessToken() async {

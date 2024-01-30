@@ -77,6 +77,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                       ),
                       ListView.builder(
+                        padding: EdgeInsets.symmetric(horizontal: 4,vertical: 10),
                         shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),
                         itemCount: (top10Data.length / 2).ceil(),
@@ -98,6 +99,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     );
                                   },
                                   child: Card(
+                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
                                     color: Colors.grey[900],
                                     child: Column(
                                       mainAxisAlignment: MainAxisAlignment.center,
@@ -179,6 +181,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   ),
                                 ),
                                 ListView.builder(
+                                  padding: EdgeInsets.symmetric(horizontal: 4,vertical: 4),
                                   shrinkWrap: true,
                                   physics: NeverScrollableScrollPhysics(),
                                   itemCount: (albumData.length / 2).ceil(),
@@ -194,6 +197,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
                                         return Expanded(
                                           child: Card(
+                                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
                                             color: Colors.grey[900],
                                             child: Column(
                                               mainAxisAlignment: MainAxisAlignment.center,
