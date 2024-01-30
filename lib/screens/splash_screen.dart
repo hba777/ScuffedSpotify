@@ -52,10 +52,12 @@ class SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     mq = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
-        backgroundColor: Colors.blueAccent,
+        backgroundColor: Colors.black,
         automaticallyImplyLeading: false,
-        title: const Text("Scuffed Spotify",textAlign: TextAlign.center,),
+        title: const Text("Scuffed Spotify",textAlign: TextAlign.center,
+            style: TextStyle(color: Colors.white,)),
         actions: [
           IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
           IconButton(onPressed: () {}, icon: const Icon(Icons.more_vert)),
@@ -76,7 +78,7 @@ class SplashScreenState extends State<SplashScreen> {
                 style: TextStyle(
                     fontSize: 32,
                     fontWeight: FontWeight.bold,
-                    color: Colors.black
+                    color: Colors.white
                 ),
               ))
         ],
