@@ -1,7 +1,8 @@
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
-import 'package:spotify/spotify.dart';
+import 'package:scuffed_spotify/screens/SongChartInfo.dart';
+import 'package:spotify/spotify.dart' as flutter;
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:scuffed_spotify/api/apis.dart'; // Import your APIs file
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
@@ -56,8 +57,8 @@ class _ChartsScreenState extends State<ChartsScreen> {
     final yt = YoutubeExplode();
     const String clientId = 'd65f6211807049fe97cf6eb23ceea7e5';
     const String clientSecret = '101aa97ef3214b279e29c5aeee414dd0';
-    final credentials = SpotifyApiCredentials(clientId, clientSecret);
-    final spotify = SpotifyApi(credentials);
+    final credentials = flutter.SpotifyApiCredentials(clientId, clientSecret);
+    final spotify = flutter.SpotifyApi(credentials);
     final track = await spotify.tracks.get(widget.auto.trackId);
     String? songname = track.name;
 
@@ -80,52 +81,44 @@ class _ChartsScreenState extends State<ChartsScreen> {
         ),
       ),
       child: Scaffold(
-        backgroundColor: Colors.blueGrey[900],
+        backgroundColor: Colors.black,
         appBar: AppBar(
-          title: Text('Chart for ${widget.auto.trackName}', style: TextStyle(color: Colors.white)),
-          backgroundColor: Colors.blueGrey,
+          title: Text('${widget.auto.trackName}', style: TextStyle(color: Colors.white)),
+          backgroundColor: Colors.deepPurple.shade700,
+          actions: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(right:10.0),
+              child: IconButton(onPressed: (){
+                Navigator.push(context, MaterialPageRoute(builder: (_) => SongInfo(auto: widget.auto)));
+              }, icon: Icon(Icons.info),
+                padding: EdgeInsets.only(left: 40),)
+            ),
+          ],
         ),
 
         body: Column(
           children: [
             // Add other UI elements if needed
-            Expanded(
-              child: SfCircularChart(
-                title: ChartTitle(
-                  text: 'Song Properties',
-                  textStyle: TextStyle(color: Colors.white,
-                  fontSize: 20), // Set title text color to white
+            Container(
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Colors.black, // Specify your border color here
+                  width: 40, // Specify the border width here
                 ),
-                legend: Legend(
-                  isVisible: true,
-                  textStyle: TextStyle(color: Colors.white,
-                  fontSize: 20),
-                  overflowMode: LegendItemOverflowMode.wrap// Set legend text color to white
-                ),
-                series: <DoughnutSeries<Map<String, dynamic>, String>>[
-                  DoughnutSeries<Map<String, dynamic>, String>(
-                    dataSource: [
-                      {'metric': 'Energy', 'value': widget.auto.energy},
-                      {'metric': 'Loudness', 'value': widget.auto.loudness},
-                      {'metric': 'Key', 'value': widget.auto.keyValue},
-                      {'metric': 'Mode', 'value': widget.auto.modeValue},
-                      {'metric': 'Speechiness', 'value': widget.auto.speechiness},
-                      {'metric': 'Acousticness', 'value': widget.auto.acousticness},
-                      {'metric': 'Instrumentalness', 'value': widget.auto.instrumentalness},
-                      {'metric': 'Liveness', 'value': widget.auto.liveness},
-                      {'metric': 'Valence', 'value': widget.auto.valence},
-                    ],
-                    xValueMapper: (Map<String, dynamic> data, _) => data['metric'],
-                    yValueMapper: (Map<String, dynamic> data, _) => double.parse(data['value'].toString()),
-                    dataLabelSettings: DataLabelSettings(
-                      isVisible: true,
-                      textStyle: TextStyle(color: Colors.white,
-                      fontSize: 10), // Set data label text color to white
-                    ),
-                  ),
-                ],
+              ),
+              padding: EdgeInsets.only(top: 150),
+              child: Image.network(
+                widget.auto.url!,
+                width: double.infinity,
+                height: 250,
+                fit: BoxFit.cover,
               ),
             ),
+            Text("${widget.auto.trackName}",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 23)
+              ),
+            SizedBox(height: 5,),
+            Text("${widget.auto.trackArtist}",style: TextStyle(color: Colors.grey,fontWeight: FontWeight.bold,fontSize: 20)
+            )
           ],
         ),
         bottomNavigationBar: BottomAppBar(

@@ -50,7 +50,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 fontSize: 25), // Set text color to white
                 decoration: InputDecoration(
                   labelText: 'Enter Song Name',
-                  labelStyle: TextStyle(color: Colors.white, fontSize: 30),
+                  labelStyle: TextStyle(color: Colors.white, fontSize: 20),
                   suffixIcon: IconButton(
                     icon: Icon(Icons.search, color: Colors.white),
                     onPressed: () {

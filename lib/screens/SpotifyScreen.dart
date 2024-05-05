@@ -98,48 +98,57 @@ class _MyHomePageState extends State<MyHomePage> {
                                       MaterialPageRoute(builder: (_) => ChartsScreen(auto: tappedItem)),
                                     );
                                   },
-                                  child: Card(
-                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
-                                    color: Colors.grey[900],
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        if (tappedItem.url != null)
-                                          Container(
-                                            decoration: BoxDecoration(
-                                              color: Colors.black,
-                                              border: Border(top: BorderSide(color: Colors.black, width: 2.0)),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(bottom: 26),
+                                    child: Card(
+                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
+                                      color: Colors.grey[900],
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          if (tappedItem.url != null)
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                color: Colors.black,
+                                                border: Border(top: BorderSide(color: Colors.black, width: 2.0)),
+                                              ),
+                                              child: Image.network(
+                                                tappedItem.url!,
+                                                width: double.infinity,
+                                                height: 150,
+                                                fit: BoxFit.cover,
+                                              ),
                                             ),
-                                            child: Image.network(
-                                              tappedItem.url!,
-                                              width: double.infinity,
-                                              height: 150,
-                                              fit: BoxFit.cover,
+                                          SizedBox(height: 8),
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                                            child: Text(
+                                              ' ${tappedItem.trackName}',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold
+
+                                              ),
+                                              textAlign: TextAlign.center,
                                             ),
                                           ),
-                                        SizedBox(height: 8),
-                                        Text(
-                                          'Name: ${tappedItem.trackName}',
-                                          style: TextStyle(
-                                            color: Colors.white,
-      
+
+                                          Text(
+                                            'Artist: ${tappedItem.trackArtist}',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                            ),
                                           ),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                        SizedBox(height: 8),
-                                        Text(
-                                          'Popularity: ${tappedItem.trackPopularity}',
-                                          style: TextStyle(
-                                            color: Colors.white,
+                                          Text(
+                                            'Popularity: ${tappedItem.trackPopularity}',
+                                            style: TextStyle(
+                                              color: Colors.grey,
+                                            ),
                                           ),
-                                        ),
-                                        Text(
-                                          'Artist: ${tappedItem.trackArtist}',
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ],
+                                          SizedBox(height: 8),
+
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -217,19 +226,14 @@ class _MyHomePageState extends State<MyHomePage> {
                                                   ),
                                                 SizedBox(height: 8),
                                                 Text(
-                                                  'Album Name: ${album.trackAlbumName}',
+                                                  '${album.trackAlbumName}',
                                                   style: TextStyle(
                                                     color: Colors.white,
                                                   ),
                                                   textAlign: TextAlign.center,
                                                 ),
                                                 SizedBox(height: 8),
-                                                Text(
-                                                  'Release Date: ${album.trackAlbumReleaseDate}',
-                                                  style: TextStyle(
-                                                    color: Colors.white,
-                                                  ),
-                                                ),
+
                                               ],
                                             ),
                                           ),
