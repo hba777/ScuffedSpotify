@@ -1,5 +1,3 @@
-### Made by the Scuffed Boys
-
 ## Getting Started
 
 This was a projcet led purely by our passion and was a very fulfilling experience. We made it for our SQL databsae project at university. It allows users to play songs and also gain an insight as to the what plays a big role in a songs popularity by comparing metrics like loudness and energy.
