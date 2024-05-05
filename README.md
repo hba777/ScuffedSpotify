@@ -1,4 +1,4 @@
-# Scuffed_Spotify
+![HomeScreen](https://github.com/hba777/ScuffedSpotify/assets/117719500/f16272a2-daae-4977-8e4b-6231ed0333e5)# Scuffed_Spotify
 
 Made by the Scuffed Boys
 
@@ -33,13 +33,16 @@ This was a projcet led purely by our passion and was a very fulfilling experienc
 ![LoginScreen](https://github.com/hba777/ScuffedSpotify/assets/117719500/58bb25a3-ae32-4569-b43b-121ca8c33027)
 
 ## Home Screen
-![Main Screen](https://github.com/hba777/ScuffedSpotify/assets/117719500/a2f9e7c3-3864-4cd4-9e54-6e54a6f813ef)
+![HomeScreen](https://github.com/hba777/ScuffedSpotify/assets/117719500/5037d225-41ab-44be-a4ae-0f0a101b43e3)
 
 ## Search Screen
 ![Search Screen](https://github.com/hba777/ScuffedSpotify/assets/117719500/e1aaa127-ab2b-47ea-bf53-aec7219de9cb)
 
-## Songs Data
-![Songs Chart](https://github.com/hba777/ScuffedSpotify/assets/117719500/5d19ea9a-95b8-42cb-9abe-eddea034dc73)
+## Songs Screen
+![SongScreen](https://github.com/hba777/ScuffedSpotify/assets/117719500/7c74f909-43f7-4cc1-ad09-89a6bc836b46)
+
+## Songs Data Screen
+![SongChartInfo](https://github.com/hba777/ScuffedSpotify/assets/117719500/c1bd6695-5354-4ae1-a94f-0f539779ab1e)
 
 ## Yearly Songs
 ![Yearly Song](https://github.com/hba777/ScuffedSpotify/assets/117719500/072b7be7-40dd-4c08-835f-a6ae3126520f)
