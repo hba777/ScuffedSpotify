@@ -1,6 +1,4 @@
-![HomeScreen](https://github.com/hba777/ScuffedSpotify/assets/117719500/f16272a2-daae-4977-8e4b-6231ed0333e5)# Scuffed_Spotify
-
-Made by the Scuffed Boys
+### Made by the Scuffed Boys
 
 ## Getting Started
 
